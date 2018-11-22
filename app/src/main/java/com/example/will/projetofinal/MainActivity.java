@@ -48,7 +48,10 @@
                                          Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                          startActivity(intent);
                                          return true;
-
+                                     case R.id.menu_listEvents:
+                                         Intent intent1 = new Intent(getApplicationContext(), EventsListActivity.class);
+                                         startActivity(intent1);
+                                         return true;
                                      default:
                                          return false;
                                  }

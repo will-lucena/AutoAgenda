@@ -40,7 +40,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".EventsListActivity"></activity>
+        <activity android:name=".EventsListActivity" />
+        <activity android:name=".EventCreationActivity"></activity>
     </application>
 
 </manifest>

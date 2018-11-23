@@ -12,6 +12,7 @@
  import android.view.View;
  import android.widget.CalendarView;
 
+ import java.util.ArrayList;
  import java.util.Calendar;
  import java.util.Date;
  import java.util.List;
@@ -22,10 +23,17 @@
      private Toolbar toolbar;
      private CalendarView calendarView;
 
+     public static List<Event> events;
+
      @Override
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
+
+         if (events == null)
+         {
+             events = new ArrayList<>();
+         }
 
          calendarView = findViewById(R.id.calendarView);
 
@@ -51,6 +59,10 @@
                                      case R.id.menu_listEvents:
                                          Intent intent1 = new Intent(getApplicationContext(), EventsListActivity.class);
                                          startActivity(intent1);
+                                         return true;
+                                     case R.id.menu_addEvent:
+                                         Intent intent2 = new Intent(getApplicationContext(), EventCreationActivity.class);
+                                         startActivity(intent2);
                                          return true;
                                      default:
                                          return false;

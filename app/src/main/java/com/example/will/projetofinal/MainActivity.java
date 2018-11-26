@@ -12,6 +12,15 @@
  import android.view.View;
  import android.widget.CalendarView;
 
+ import com.facebook.AccessToken;
+ import com.facebook.GraphRequest;
+ import com.facebook.GraphResponse;
+ import com.facebook.HttpMethod;
+
+ import org.json.JSONArray;
+ import org.json.JSONException;
+ import org.json.JSONObject;
+
  import java.util.ArrayList;
  import java.util.Calendar;
  import java.util.Date;
@@ -29,6 +38,40 @@
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
+
+
+         AccessToken accessToken = AccessToken.getCurrentAccessToken();
+         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+         if (isLoggedIn)
+         {
+             new GraphRequest(
+                     AccessToken.getCurrentAccessToken(),
+                     "/" + accessToken.getUserId() + "/events",
+                     null,
+                     HttpMethod.GET,
+                     new GraphRequest.Callback() {
+                         public void onCompleted(GraphResponse response) {
+                             /* handle the result */
+                             try {
+                                 JSONObject json = new JSONObject(response.getRawResponse());
+                                 JSONArray results = json.getJSONArray("data");
+
+                                 for(int i = 0; i < results.length(); i++)
+                                 {
+                                     Log.i("debug", results.getJSONObject(i).getString("name"));
+                                 }
+                             } catch (JSONException e) {
+                                 e.printStackTrace();
+                             }
+                         }
+                     }
+             ).executeAsync();
+         }
+         else
+         {
+             Log.i("debug", "deslogado");
+         }
 
          if (events == null)
          {
@@ -75,4 +118,5 @@
                  }
          );
      }
+
  }

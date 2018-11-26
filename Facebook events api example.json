@@ -1,0 +1,91 @@
+{
+  "data": [
+    {
+      "description": "2018 precisa de um enterro digno. Quem entender, entendeu!
+⠀
+#SpottedFest",
+      "end_time": "2018-12-09T04:00:00-0300",
+      "name": "Spotted Fest - Enterro do Semestre",
+      "place": {
+        "name": "Arena das Dunas",
+        "location": {
+          "city": "Natal",
+          "country": "Brazil",
+          "latitude": -5.8267315438381,
+          "longitude": -35.212417030082,
+          "state": "RN",
+          "street": "Av. Prudente de Morais, 5121 - Lagoa Nova",
+          "zip": "59022-400"
+        },
+        "id": "491370590891390"
+      },
+      "start_time": "2018-12-08T21:00:00-0300",
+      "id": "1061005437399694",
+      "rsvp_status": "unsure"
+    },
+    {
+      "end_time": "2018-11-14T14:30:00-0300",
+      "name": "Introdução à Geração Procedural de Conteúdo em Jogos",
+      "place": {
+        "name": "CIVT - Metrópole Digital",
+        "location": {
+          "city": "Natal",
+          "country": "Brazil",
+          "latitude": -5.8322570704339,
+          "longitude": -35.205393450637,
+          "state": "RN",
+          "street": "Av. Capitão Mor Golveia",
+          "zip": "59076-400"
+        },
+        "id": "487835467908628"
+      },
+      "start_time": "2018-11-14T13:30:00-0300",
+      "id": "354197445348055",
+      "rsvp_status": "attending"
+    },
+    {
+      "description": "E ae galera!
+
+O PONG de Outubro está marcado (bem atrasado hahaha)!
+
+Neste mês estamos realizando uma mesa redonda para discutir a participação das empresas potiguares nos maiores eventos de games da América Latina, a Brasil Game Show 2018, o SBGames 2018 e a Game Jam+ 2018!
+
+Neste ano tivemos a participação de membros do PONG nestes diversos eventos, onde foram pelo stand do PONG/SEBRAE RN as empresas Demerara Games e Massive Work Studio para a BGS 2018, o Tiago Fernando esteve como Chair do Festival de Jogos da SBGames 2018 e foram a Pippin Games, Demerara Games e o Narto Junior representando o PONG para a final da Game Jam+ no Rio de Janeiro, onde a Pippin Games com seu game FUNGI levou incríveis 4 premiações!
+
+Nessa mesa redonda, que é aberta ao público, iremos conversar sobre os resultados dos eventos, todos os tramites, coisas legais e coisas não legais que aconteceram e as melhorias que poderemos implementar para os próximos eventos, tanto em Natal quanto no Brasil afora!
+
+Para participar do evento desse mês, é necessário se inscrever no evento na plataforma sympla, para que seus dados possam ir para o Sebrae e sua entrada possa ser garantida. O registro pode ser feito no link abaixo:
+https://www.sympla.com.br/pong---outubro__397802
+
+Lembre de marcar no evento do grupo do facebook que você estará indo para o evento! 
+
+Ah, não esqueça de levar seus jogos e protótipos, sempre temos uma sessão onde apresentamos e pegamos feedback da galera, então é uma boa oportunidade pra pegar aquele projeto e mostrar pro pessoal!
+
+Contamos com a sua presença!",
+      "end_time": "2018-11-10T18:00:00-0300",
+      "name": "PONG #36 - Outubro",
+      "place": {
+        "name": "Sebrae RN",
+        "location": {
+          "city": "Natal",
+          "country": "Brazil",
+          "latitude": -5.8249824446667,
+          "longitude": -35.211614181333,
+          "state": "RN",
+          "street": "Av. Lima e Silva, Nº 76, Lagoa Nova",
+          "zip": "59075-710"
+        },
+        "id": "211346718892575"
+      },
+      "start_time": "2018-11-10T15:00:00-0300",
+      "id": "2249245091752785",
+      "rsvp_status": "attending"
+    }
+  ],
+  "paging": {
+    "cursors": {
+      "before": "QVFIUnVvWnRRQ2xVSEhvY05wOVdhQW5hSzVhMGIzN0ljOC1jcnNvRUNneUZANanlMVFNBR0hzTGVwV2toWjJLYlczaFhQX1pONGd1M0NYc1NRNVdjS3E2Wnd3",
+      "after": "QVFIUk1udzk1U2hJd0Q2TzBDTWZAOUHNpcHJVRm42WGJoakt3a2N3LUhsalRyTGVnNXJKNDROZAllEb2JZAMERqbGVNbFA5RFh0dW5mRDdIZAzdkcFNGRVFfWjVR"
+    }
+  }
+}

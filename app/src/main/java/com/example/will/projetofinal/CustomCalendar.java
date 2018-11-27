@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
 public class CustomCalendar extends LinearLayout {
+    
+    private int currentExibitionMonth;
+    private int currentExibitionYear;
+    
     // for logging
     private static final String LOGTAG = "Calendar View";
 
@@ -198,6 +206,8 @@ public class CustomCalendar extends LinearLayout {
 
         // set header color according to current season
         int month = currentDate.get(Calendar.MONTH);
+        currentExibitionMonth = month;
+        currentExibitionYear = currentDate.get(Calendar.YEAR);
         int season = monthSeason[month];
         int color = rainbow[season];
 
@@ -219,7 +229,7 @@ public class CustomCalendar extends LinearLayout {
             this.eventDays = eventDays;
             inflater = LayoutInflater.from(context);
         }
-
+        
         @Override
         public View getView(int position, View view, ViewGroup parent)
         {
@@ -228,7 +238,6 @@ public class CustomCalendar extends LinearLayout {
             int day = date.getDate();
             int month = date.getMonth();
             int year = date.getYear();
-
             // today
             final Date today = new Date();
 
@@ -276,13 +285,12 @@ public class CustomCalendar extends LinearLayout {
             TextView textView = view.findViewById(R.id.day);
             textView.setTypeface(null, Typeface.NORMAL);
             textView.setTextColor(Color.BLACK);
-
-            if (month != today.getMonth() || year != today.getYear())
+            if (month != currentExibitionMonth || year != currentExibitionYear - 1900)
             {
                 // if this day is outside current month, grey it out
                 textView.setTextColor(getResources().getColor(R.color.greyed_out));
             }
-            else if (day == today.getDate())
+            else if (day == today.getDate() && month == today.getMonth() && year == today.getYear())
             {
                 // if it is today, set it to blue/bold
                 textView.setTypeface(null, Typeface.BOLD);

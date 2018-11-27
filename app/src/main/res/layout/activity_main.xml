@@ -17,11 +17,11 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <CalendarView
+    <com.example.will.projetofinal.CustomCalendar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/calendarView">
 
-    </CalendarView>
+    </com.example.will.projetofinal.CustomCalendar>
 
 </LinearLayout>

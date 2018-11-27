@@ -24,15 +24,19 @@
  import java.util.ArrayList;
  import java.util.Calendar;
  import java.util.Date;
+ import java.util.HashSet;
+ import java.util.Hashtable;
  import java.util.List;
 
 
  public class MainActivity extends AppCompatActivity {
 
      private Toolbar toolbar;
-     private CalendarView calendarView;
+     private CustomCalendar calendarView;
 
      public static List<BaseEvent> events;
+     public static Hashtable<Date, BaseEvent> customEvents;
+     public static HashSet<Date> dates;
 
      @Override
      protected void onCreate(Bundle savedInstanceState)
@@ -40,8 +44,12 @@
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
 
+         calendarView = findViewById(R.id.calendarView);
+
          AccessToken accessToken = AccessToken.getCurrentAccessToken();
          boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+         dates = new HashSet<>();
+         customEvents = new Hashtable<>();
 
          if (events == null)
          {
@@ -68,8 +76,6 @@
          {
              Log.i("debug", "deslogado");
          }
-
-         calendarView = findViewById(R.id.calendarView);
 
          toolbar = findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
@@ -121,8 +127,14 @@
                  String eventName = results.getJSONObject(i).getString("name");
                  String startDate = results.getJSONObject(i).getString("start_time");
                  String endDate = results.getJSONObject(i).getString("end_time");
-                 events.add(new Event(eventName, startDate, endDate));
+                 String[] date = startDate.split("T")[0].split("-");
+                 Event event = new Event(eventName, startDate, endDate);
+                 Date d = BaseEvent.toDate(date[0], date[1], date[2]);
+                 dates.add(d);
+                 events.add(event);
+                 customEvents.put(d, event);
              }
+             calendarView.updateCalendar(dates);
          } catch (JSONException e) {
              e.printStackTrace();
          }

@@ -11,12 +11,15 @@ public abstract class BaseEvent
 
     protected String simpleStartDate;
     protected String simpleEndDate;
+    
+    private EventType type;
 
     protected BaseEvent()
     {
         name = "default event";
         startDate = Calendar.getInstance().getTime();
         endDate = Calendar.getInstance().getTime();
+        type = EventType.Default;
     }
 
     protected BaseEvent(String name, Date date)
@@ -24,6 +27,7 @@ public abstract class BaseEvent
         this.name = name;
         this.startDate = date;
         this.endDate = date;
+        type = EventType.Default;
     }
 
     protected BaseEvent(String name, Date startDate, Date endDate)
@@ -31,6 +35,7 @@ public abstract class BaseEvent
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        type = EventType.Default;
     }
 
     protected BaseEvent(String name, String[] date)
@@ -42,6 +47,7 @@ public abstract class BaseEvent
 
         simpleStartDate = String.format("%s/%s/%s", date[2], date[1], date[0]);
         simpleEndDate = simpleStartDate;
+        type = EventType.Default;
     }
 
     protected BaseEvent(String name, String[] startDate, String[] endDate)
@@ -54,6 +60,7 @@ public abstract class BaseEvent
 
         simpleStartDate = String.format("%s/%s/%s", startDate[2], startDate[1], startDate[0]);
         simpleEndDate = String.format("%s/%s/%s", endDate[2], endDate[1], endDate[0]);
+        type = EventType.Default;
     }
 
     public static Date toDate(String year, String month, String day)
@@ -67,5 +74,15 @@ public abstract class BaseEvent
     public String toString()
     {
         return String.format("The %s starts at %s and ends at %s", name, simpleStartDate, simpleEndDate);
+    }
+    
+    public void setEventType(EventType type)
+    {
+        this.type = type;
+    }
+    
+    public EventType getEventType()
+    {
+        return type;
     }
 }

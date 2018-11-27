@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -236,7 +237,7 @@ public class CustomCalendar extends LinearLayout {
                 view = inflater.inflate(R.layout.custom_calendar_day, parent, false);
 
             // if this day has an event, specify event image
-            view.setBackgroundResource(0);
+            //view.setBackgroundResource(0);
             if (eventDays != null)
             {
                 for (final Date eventDate : eventDays)
@@ -245,12 +246,25 @@ public class CustomCalendar extends LinearLayout {
                             eventDate.getMonth() == month &&
                             eventDate.getYear() == year)
                     {
+                        
+                        final BaseEvent event = MainActivity.customEvents.get(eventDate);
+                        Log.i("debug", event.toString());
+                        switch (event.getEventType())
+                        {
+                            case Event:
+                                view.findViewById(R.id.eventIcon).setVisibility(VISIBLE);
+                                break;
+                            case Exam:
+                                view.findViewById(R.id.examIcon).setVisibility(VISIBLE);
+                                break;
+                        }
+                        
                         // mark this day for event
-                        view.setBackgroundResource(R.drawable.reminder);
+                        //view.setBackgroundResource(R.drawable.reminder);
                         view.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(view.getContext(), MainActivity.customEvents.get(eventDate).toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(view.getContext(), event.toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;
@@ -259,23 +273,24 @@ public class CustomCalendar extends LinearLayout {
             }
 
             // clear styling
-            ((TextView)view).setTypeface(null, Typeface.NORMAL);
-            ((TextView)view).setTextColor(Color.BLACK);
+            TextView textView = view.findViewById(R.id.day);
+            textView.setTypeface(null, Typeface.NORMAL);
+            textView.setTextColor(Color.BLACK);
 
             if (month != today.getMonth() || year != today.getYear())
             {
                 // if this day is outside current month, grey it out
-                ((TextView)view).setTextColor(getResources().getColor(R.color.greyed_out));
+                textView.setTextColor(getResources().getColor(R.color.greyed_out));
             }
             else if (day == today.getDate())
             {
                 // if it is today, set it to blue/bold
-                ((TextView)view).setTypeface(null, Typeface.BOLD);
-                ((TextView)view).setTextColor(getResources().getColor(R.color.today));
+                textView.setTypeface(null, Typeface.BOLD);
+                textView.setTextColor(getResources().getColor(R.color.today));
             }
 
             // set text
-            ((TextView)view).setText(String.valueOf(date.getDate()));
+            textView.setText(String.valueOf(date.getDate()));
 
             return view;
         }

@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class EventsListActivity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayAdapter<Event> eventsAdapter;
+    private ArrayAdapter<BaseEvent> eventsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class EventsListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
-        eventsAdapter = new ArrayAdapter<Event>(this, android.R.layout.simple_list_item_1, MainActivity.events);
+        eventsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.events);
 
         listView.setAdapter(eventsAdapter);
 

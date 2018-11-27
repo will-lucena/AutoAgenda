@@ -32,19 +32,25 @@
      private Toolbar toolbar;
      private CalendarView calendarView;
 
-     public static List<Event> events;
+     public static List<BaseEvent> events;
 
      @Override
-     protected void onCreate(Bundle savedInstanceState) {
+     protected void onCreate(Bundle savedInstanceState)
+     {
          super.onCreate(savedInstanceState);
          setContentView(R.layout.activity_main);
-
 
          AccessToken accessToken = AccessToken.getCurrentAccessToken();
          boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
+         if (events == null)
+         {
+             events = new ArrayList<>();
+         }
+
          if (isLoggedIn)
          {
+             Log.i("debug", "logado");
              new GraphRequest(
                      AccessToken.getCurrentAccessToken(),
                      "/" + accessToken.getUserId() + "/events",
@@ -52,18 +58,8 @@
                      HttpMethod.GET,
                      new GraphRequest.Callback() {
                          public void onCompleted(GraphResponse response) {
-                             /* handle the result */
-                             try {
-                                 JSONObject json = new JSONObject(response.getRawResponse());
-                                 JSONArray results = json.getJSONArray("data");
-
-                                 for(int i = 0; i < results.length(); i++)
-                                 {
-                                     Log.i("debug", results.getJSONObject(i).getString("name"));
-                                 }
-                             } catch (JSONException e) {
-                                 e.printStackTrace();
-                             }
+                             Log.i("debug", "loading");
+                            loadEvents(response.getRawResponse());
                          }
                      }
              ).executeAsync();
@@ -71,11 +67,6 @@
          else
          {
              Log.i("debug", "deslogado");
-         }
-
-         if (events == null)
-         {
-             events = new ArrayList<>();
          }
 
          calendarView = findViewById(R.id.calendarView);
@@ -119,4 +110,21 @@
          );
      }
 
+     private void loadEvents(String response)
+     {
+         try {
+             JSONObject json = new JSONObject(response);
+             JSONArray results = json.getJSONArray("data");
+
+             for(int i = 0; i < results.length(); i++)
+             {
+                 String eventName = results.getJSONObject(i).getString("name");
+                 String startDate = results.getJSONObject(i).getString("start_time");
+                 String endDate = results.getJSONObject(i).getString("end_time");
+                 events.add(new Event(eventName, startDate, endDate));
+             }
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+     }
  }

@@ -31,7 +31,7 @@ public class Event extends BaseEvent
     public Event(String name, String startTimestamp, String endTimestamp)
     {
         super(name, startTimestamp.split("T")[0].split("-"), endTimestamp.split("T")[0].split("-"));
-        setEventType(EventType.Exam);
+        setEventType(EventType.Event);
     }
     
     public String getName()

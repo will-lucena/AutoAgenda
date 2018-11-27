@@ -18,18 +18,25 @@
 
     <ImageView
         android:id="@+id/eventIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="left|top"
-        android:src="@drawable/reminder"
+        android:src="@drawable/outline_group_24"
         android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/examIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center|top"
-        android:src="@drawable/reminder"
+        android:src="@drawable/outline_school_24"
         android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/dayOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:background="#400099cc"/>
 </FrameLayout>
 

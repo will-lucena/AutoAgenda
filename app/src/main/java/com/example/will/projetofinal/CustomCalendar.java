@@ -1,6 +1,7 @@
 package com.example.will.projetofinal;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -257,7 +258,6 @@ public class CustomCalendar extends LinearLayout {
                     {
                         
                         final BaseEvent event = MainActivity.customEvents.get(eventDate);
-                        Log.i("debug", event.toString());
                         switch (event.getEventType())
                         {
                             case Event:
@@ -284,17 +284,19 @@ public class CustomCalendar extends LinearLayout {
             // clear styling
             TextView textView = view.findViewById(R.id.day);
             textView.setTypeface(null, Typeface.NORMAL);
-            textView.setTextColor(Color.BLACK);
+            textView.setTextColor(getResources().getColor(R.color.greyed_out));
+            
             if (month != currentExibitionMonth || year != currentExibitionYear - 1900)
             {
                 // if this day is outside current month, grey it out
-                textView.setTextColor(getResources().getColor(R.color.greyed_out));
+                textView.setTextColor(Color.YELLOW);
             }
-            else if (day == today.getDate() && month == today.getMonth() && year == today.getYear())
+            if (day == today.getDate() && month == today.getMonth() && year == today.getYear())
             {
                 // if it is today, set it to blue/bold
                 textView.setTypeface(null, Typeface.BOLD);
                 textView.setTextColor(getResources().getColor(R.color.today));
+                view.findViewById(R.id.dayOverlay).setVisibility(VISIBLE);
             }
 
             // set text

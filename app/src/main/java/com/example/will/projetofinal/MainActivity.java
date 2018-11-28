@@ -2,6 +2,7 @@
 
  import android.content.Intent;
  import android.graphics.Color;
+ import android.net.Uri;
  import android.os.Bundle;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.PopupMenu;
@@ -16,6 +17,7 @@
  import com.facebook.GraphRequest;
  import com.facebook.GraphResponse;
  import com.facebook.HttpMethod;
+ import com.facebook.Profile;
 
  import org.json.JSONArray;
  import org.json.JSONException;
@@ -59,18 +61,8 @@
          if (isLoggedIn)
          {
              Log.i("debug", "logado");
-             new GraphRequest(
-                     AccessToken.getCurrentAccessToken(),
-                     "/" + accessToken.getUserId() + "/events",
-                     null,
-                     HttpMethod.GET,
-                     new GraphRequest.Callback() {
-                         public void onCompleted(GraphResponse response) {
-                             Log.i("debug", "loading");
-                            loadEvents(response.getRawResponse());
-                         }
-                     }
-             ).executeAsync();
+             AccessToken token = AccessToken.getCurrentAccessToken();
+             getUserEvents(token);
          }
          else
          {
@@ -138,5 +130,21 @@
          } catch (JSONException e) {
              e.printStackTrace();
          }
+     }
+    
+     private void getUserEvents(AccessToken currentAccessToken)
+     {
+         new GraphRequest(
+                 currentAccessToken,
+                 "/" + currentAccessToken.getUserId() + "/events",
+                 null,
+                 HttpMethod.GET,
+                 new GraphRequest.Callback() {
+                     public void onCompleted(GraphResponse response) {
+                         Log.i("debug", "loading");
+                         loadEvents(response.getRawResponse());
+                     }
+                 }
+         ).executeAsync();
      }
  }

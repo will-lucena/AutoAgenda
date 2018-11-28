@@ -49,7 +49,6 @@ public class FacebookRequests
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
                         Log.i("debug", "request success");
-                        Uri pictureUri = Profile.getCurrentProfile().getProfilePictureUri(300, 200);
                         callback.onEndProccess(response.getRawResponse());
                     }
                 }

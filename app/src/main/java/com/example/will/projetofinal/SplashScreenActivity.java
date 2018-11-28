@@ -44,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
     }
     
     @Override
-    public void onEndProccess(String result, String pictureUrl) {
+    public void onEndProccess(String result) {
         Log.i("debug", "callback received");
         launchMainActivity(result);
     }
@@ -54,6 +54,7 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
         Log.i("debug", "launching activity");
         intent = new Intent(this, MainActivity.class);
         extras.putString(BundleKeys.facebook_events_json.toString(), json);
+        extras.putBoolean(BundleKeys.is_logged_in.toString(), true);
         intent.putExtras(extras);
         Log.i("debug", "go");
         startActivity(intent);

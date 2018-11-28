@@ -1,40 +1,34 @@
  package com.example.will.projetofinal;
 
  import android.content.Intent;
- import android.graphics.Color;
- import android.net.Uri;
  import android.os.Bundle;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.PopupMenu;
  import android.util.Log;
  import android.support.v7.widget.Toolbar;
- import android.view.Menu;
  import android.view.MenuItem;
  import android.view.View;
- import android.widget.CalendarView;
 
  import com.facebook.AccessToken;
  import com.facebook.GraphRequest;
  import com.facebook.GraphResponse;
  import com.facebook.HttpMethod;
- import com.facebook.Profile;
 
  import org.json.JSONArray;
  import org.json.JSONException;
  import org.json.JSONObject;
 
  import java.util.ArrayList;
- import java.util.Calendar;
  import java.util.Date;
  import java.util.HashSet;
  import java.util.Hashtable;
  import java.util.List;
 
 
- public class MainActivity extends AppCompatActivity {
-
+ public class MainActivity extends AppCompatActivity
+ {
      private Toolbar toolbar;
-     private CustomCalendar calendarView;
+     public static CustomCalendar calendarView;
 
      public static List<BaseEvent> events;
      public static Hashtable<Date, BaseEvent> customEvents;
@@ -47,9 +41,6 @@
          setContentView(R.layout.activity_main);
 
          calendarView = findViewById(R.id.calendarView);
-
-         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
          dates = new HashSet<>();
          customEvents = new Hashtable<>();
 
@@ -57,12 +48,10 @@
          {
              events = new ArrayList<>();
          }
-
-         if (isLoggedIn)
+         if ((boolean)getIntent().getExtras().get(BundleKeys.is_logged_in.toString()))
          {
              Log.i("debug", "logado");
-             AccessToken token = AccessToken.getCurrentAccessToken();
-             getUserEvents(token);
+             loadEvents((String)getIntent().getExtras().get(BundleKeys.facebook_events_json.toString()));
          }
          else
          {
@@ -86,6 +75,7 @@
                                  {
                                      case R.id.menu_addAccount:
                                          Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                         intent.putExtras(getIntent().getExtras());
                                          startActivity(intent);
                                          return true;
                                      case R.id.menu_listEvents:
@@ -108,8 +98,9 @@
          );
      }
 
-     private void loadEvents(String response)
+     public static void loadEvents(String response)
      {
+         Log.i("debug", "carregando eventos");
          try {
              JSONObject json = new JSONObject(response);
              JSONArray results = json.getJSONArray("data");
@@ -130,21 +121,5 @@
          } catch (JSONException e) {
              e.printStackTrace();
          }
-     }
-    
-     private void getUserEvents(AccessToken currentAccessToken)
-     {
-         new GraphRequest(
-                 currentAccessToken,
-                 "/" + currentAccessToken.getUserId() + "/events",
-                 null,
-                 HttpMethod.GET,
-                 new GraphRequest.Callback() {
-                     public void onCompleted(GraphResponse response) {
-                         Log.i("debug", "loading");
-                         loadEvents(response.getRawResponse());
-                     }
-                 }
-         ).executeAsync();
      }
  }

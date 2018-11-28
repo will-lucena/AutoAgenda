@@ -11,13 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -41,7 +35,14 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".EventsListActivity" />
-        <activity android:name=".EventCreationActivity"></activity>
+        <activity android:name=".EventCreationActivity" />
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

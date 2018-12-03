@@ -36,15 +36,6 @@ public class EventsListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                EventDetailsFragment fragment = new EventDetailsFragment();
-
-                fragmentTransaction.add(R.id.fragmentView, fragment);
-                fragmentTransaction.commit();
-
                 String item = ((BaseEvent) adapterView.getItemAtPosition(i)).toString();
                 Toast.makeText(view.getContext(), item, Toast.LENGTH_SHORT).show();
             }

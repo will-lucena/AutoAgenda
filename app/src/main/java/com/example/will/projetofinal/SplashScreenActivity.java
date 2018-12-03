@@ -18,7 +18,8 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
     
     private Intent intent;
     private Bundle extras;
-    
+    private LoadingFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,9 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
     
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        
+
+        fragment = (LoadingFragment) getSupportFragmentManager().findFragmentById(R.id.loadingMessages);
+
         extras = new Bundle();
         extras.putBoolean(BundleKeys.is_logged_in.toString(), isLoggedIn);
         if (isLoggedIn)

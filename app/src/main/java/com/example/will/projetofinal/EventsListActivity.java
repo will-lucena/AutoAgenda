@@ -1,9 +1,15 @@
 package com.example.will.projetofinal;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -19,12 +25,29 @@ public class EventsListActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
-        eventsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, MainActivity.events);
+        eventsAdapter = new EventsAdapter(this, R.layout.event_list_card, MainActivity.events);
 
         listView.setAdapter(eventsAdapter);
 
         eventsAdapter.add(new Event());
         eventsAdapter.add(new Event("Test", Calendar.getInstance().getTime()));
         eventsAdapter.notifyDataSetChanged();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                EventDetailsFragment fragment = new EventDetailsFragment();
+
+                fragmentTransaction.add(R.id.fragmentView, fragment);
+                fragmentTransaction.commit();
+
+                String item = ((BaseEvent) adapterView.getItemAtPosition(i)).toString();
+                Toast.makeText(view.getContext(), item, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

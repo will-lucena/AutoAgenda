@@ -1,5 +1,6 @@
 package com.example.will.projetofinal;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -84,5 +85,39 @@ public abstract class BaseEvent
     public EventType getEventType()
     {
         return type;
+    }
+
+    public Long timeUntilStart()
+    {
+       Date now = Calendar.getInstance().getTime();
+       return now.getTime() - startDate.getTime();
+    }
+
+    public String timeUntil()
+    {
+        long difference = -timeUntilStart();
+
+        System.out.println("now : " + Calendar.getInstance().getTime().getTime());
+        System.out.println("startDate : " + startDate);
+        System.out.println("different : " + difference);
+
+        long secondsInMilli = 1000;
+        long daysInMilli = secondsInMilli * 24 * 60 * 60;
+
+        long elapsedDays = difference / daysInMilli;
+        difference = difference % daysInMilli;
+
+        if (difference < 0)
+        {
+            return "O evento já ocorreu";
+        }
+        else if (difference > 0)
+        {
+            return "Faltam " + elapsedDays + " para o evento começar";
+        }
+        else
+        {
+            return "O evento é hoje";
+        }
     }
 }

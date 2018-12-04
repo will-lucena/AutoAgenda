@@ -38,16 +38,12 @@ public class EventListFragment extends ListFragment
         listener = (IFragmentComunication) context;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.event_list_card, container,false);
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         eventsAdapter = new EventsAdapter(getActivity(), R.layout.event_list_card, listener.getEvents());
-
         setListAdapter(eventsAdapter);
         eventsAdapter.notifyDataSetChanged();
-        return view;
     }
 
     @Override

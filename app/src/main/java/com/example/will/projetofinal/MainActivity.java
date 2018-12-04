@@ -72,11 +72,13 @@
                                          startActivity(intent);
                                          return true;
                                      case R.id.menu_listEvents:
+                                         //*
                                          FragmentManager fragmentManager = getSupportFragmentManager();
                                          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                          fragment = new EventListFragment();
                                          fragmentTransaction.add(R.id.eventsListFragment, fragment);
                                          fragmentTransaction.commit();
+                                         /**/
                                          return true;
                                      case R.id.menu_addEvent:
                                          Intent intent2 = new Intent(getApplicationContext(), EventCreationActivity.class);

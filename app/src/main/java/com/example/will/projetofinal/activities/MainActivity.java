@@ -13,6 +13,7 @@
  import android.view.View;
  import android.widget.FrameLayout;
 
+ import com.example.will.projetofinal.models.Place;
  import com.example.will.projetofinal.utils.BundleKeys;
  import com.example.will.projetofinal.utils.CustomCalendar;
  import com.example.will.projetofinal.fragments.EventDetailsFragment;
@@ -23,6 +24,12 @@
  import com.example.will.projetofinal.R;
  import com.example.will.projetofinal.models.BaseEvent;
  import com.example.will.projetofinal.models.Event;
+ import com.google.android.gms.maps.CameraUpdateFactory;
+ import com.google.android.gms.maps.GoogleMap;
+ import com.google.android.gms.maps.OnMapReadyCallback;
+ import com.google.android.gms.maps.SupportMapFragment;
+ import com.google.android.gms.maps.model.LatLng;
+ import com.google.android.gms.maps.model.MarkerOptions;
 
  import org.json.JSONArray;
  import org.json.JSONException;

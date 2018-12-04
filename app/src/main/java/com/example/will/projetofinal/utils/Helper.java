@@ -38,8 +38,8 @@ public class Helper {
         String country = place.getString("country");
         String street = place.getString("street");
 
-        Long longitude = place.getLong("longitude");
-        Long latitude = place.getLong("latitude");
+        double longitude = place.getDouble("longitude");
+        double latitude = place.getDouble("latitude");
 
         Place location = new Place(placeName, city, state, country, street, longitude, latitude);
 

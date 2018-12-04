@@ -1,6 +1,7 @@
 package com.example.will.projetofinal.utils;
 
 import com.example.will.projetofinal.models.BaseEvent;
+import com.example.will.projetofinal.models.Place;
 
 import java.util.List;
 

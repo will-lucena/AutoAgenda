@@ -7,10 +7,10 @@ public class Place {
     private String state;
     private String country;
     private String street;
-    private long longitude;
-    private long latitude;
+    private double longitude;
+    private double latitude;
 
-    public Place(String name, String city, String state, String country, String street, long longitude, long latitude)
+    public Place(String name, String city, String state, String country, String street, double longitude, double latitude)
     {
         this.name = name;
         this.city = city;
@@ -22,12 +22,12 @@ public class Place {
         this.latitude = latitude;
     }
 
-    public long getLatitude()
+    public double getLatitude()
     {
         return latitude;
     }
 
-    public long getLongitude()
+    public double getLongitude()
     {
         return longitude;
     }
@@ -35,5 +35,10 @@ public class Place {
     @Override
     public String toString() {
         return String.format("%s - %s, %s/%s - %s", name, street, city, state, country);
+    }
+
+    public String getName()
+    {
+        return name;
     }
 }

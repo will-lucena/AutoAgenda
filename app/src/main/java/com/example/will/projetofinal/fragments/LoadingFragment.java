@@ -1,4 +1,4 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.will.projetofinal.utils.FacebookRequests;
+import com.example.will.projetofinal.utils.ICallbackReceiver;
+import com.example.will.projetofinal.R;
 
 public class LoadingFragment extends Fragment implements ICallbackReceiver {
 

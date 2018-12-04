@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity"
+    tools:context=".activities.SplashScreenActivity"
     android:orientation="vertical"
     android:layout_margin="8dp"
     android:padding="8dp">
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/loadingMessages"
-        android:name="com.example.will.projetofinal.LoadingFragment"
+        android:name="com.example.will.projetofinal.fragments.LoadingFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="5"/>

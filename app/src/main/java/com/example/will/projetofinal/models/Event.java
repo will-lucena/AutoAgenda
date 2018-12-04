@@ -1,9 +1,13 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.models;
+
+import com.example.will.projetofinal.utils.EventType;
 
 import java.util.Date;
 
 public class Event extends BaseEvent
 {
+    private Place location;
+
     public Event()
     {
         super();
@@ -33,20 +37,17 @@ public class Event extends BaseEvent
         super(name, startTimestamp.split("T")[0].split("-"), endTimestamp.split("T")[0].split("-"));
         setEventType(EventType.Event);
     }
-    
-    public String getName()
+
+    public Event(String name, String startTimestamp, String endTimestamp, Place location)
     {
-        return name;
+        super(name, startTimestamp.split("T")[0].split("-"), endTimestamp.split("T")[0].split("-"));
+        this.location = location;
+        setEventType(EventType.Event);
     }
 
-    public String getStartDate()
+    public Place getLocation()
     {
-        return simpleStartDate;
-    }
-
-    public String getEndDate()
-    {
-        return simpleEndDate;
+        return location;
     }
 
     @Override

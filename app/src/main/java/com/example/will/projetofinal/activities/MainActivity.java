@@ -1,4 +1,4 @@
- package com.example.will.projetofinal;
+ package com.example.will.projetofinal.activities;
 
  import android.content.Intent;
  import android.os.Bundle;
@@ -13,10 +13,16 @@
  import android.view.View;
  import android.widget.FrameLayout;
 
- import com.facebook.AccessToken;
- import com.facebook.GraphRequest;
- import com.facebook.GraphResponse;
- import com.facebook.HttpMethod;
+ import com.example.will.projetofinal.utils.BundleKeys;
+ import com.example.will.projetofinal.utils.CustomCalendar;
+ import com.example.will.projetofinal.fragments.EventDetailsFragment;
+ import com.example.will.projetofinal.fragments.EventListFragment;
+ import com.example.will.projetofinal.utils.EventType;
+ import com.example.will.projetofinal.utils.Helper;
+ import com.example.will.projetofinal.utils.IFragmentComunication;
+ import com.example.will.projetofinal.R;
+ import com.example.will.projetofinal.models.BaseEvent;
+ import com.example.will.projetofinal.models.Event;
 
  import org.json.JSONArray;
  import org.json.JSONException;
@@ -27,7 +33,6 @@
  import java.util.HashSet;
  import java.util.Hashtable;
  import java.util.List;
- import java.util.Set;
 
 
  public class MainActivity extends AppCompatActivity implements IFragmentComunication, CustomCalendar.IDayClickHandler
@@ -122,20 +127,15 @@
 
                  for(int i = 0; i < results.length(); i++)
                  {
-                     String eventName = results.getJSONObject(i).getString("name");
-                     String startDate = results.getJSONObject(i).getString("start_time");
-                     String endDate = results.getJSONObject(i).getString("end_time");
-                     String[] date = startDate.split("T")[0].split("-");
-                     Event event = new Event(eventName, startDate, endDate);
-                     Date eventDate = BaseEvent.toDate(date[0], date[1], date[2]);
+                     Event event = (Event) Helper.buildEvent(results.getJSONObject(i), EventType.Event);
 
                      List<BaseEvent> list = new ArrayList<>();
-                     if (events.containsKey(eventDate))
+                     if (events.containsKey(event.getStartDate()))
                      {
-                         list = events.get(eventDate);
+                         list = events.get(event.getStartDate());
                      }
                      list.add(event);
-                     events.put(eventDate, list);
+                     events.put(event.getStartDate(), list);
                  }
 
                  HashSet<Date> keys = new HashSet<>();

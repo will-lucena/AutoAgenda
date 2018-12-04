@@ -1,4 +1,4 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+
+import com.example.will.projetofinal.R;
+import com.example.will.projetofinal.models.Event;
 
 import java.util.Calendar;
 import java.util.Date;

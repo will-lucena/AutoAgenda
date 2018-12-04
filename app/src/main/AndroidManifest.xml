@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -33,10 +33,10 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".EventsListActivity" />
-        <activity android:name=".EventCreationActivity" />
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".activities.EventCreationActivity" />
+        <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

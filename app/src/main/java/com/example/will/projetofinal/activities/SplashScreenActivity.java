@@ -1,18 +1,16 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.will.projetofinal.utils.BundleKeys;
+import com.example.will.projetofinal.utils.FacebookRequests;
+import com.example.will.projetofinal.utils.ICallbackReceiver;
+import com.example.will.projetofinal.fragments.LoadingFragment;
+import com.example.will.projetofinal.R;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 public class SplashScreenActivity extends AppCompatActivity implements ICallbackReceiver {
     

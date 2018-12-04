@@ -1,20 +1,18 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
+import com.example.will.projetofinal.utils.BundleKeys;
+import com.example.will.projetofinal.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
-import com.facebook.FacebookDialog;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.squareup.picasso.Picasso;

@@ -1,22 +1,11 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.utils;
 
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.Profile;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class FacebookRequests
 {

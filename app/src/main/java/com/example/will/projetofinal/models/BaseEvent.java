@@ -1,4 +1,6 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.models;
+
+import com.example.will.projetofinal.utils.EventType;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -118,5 +120,30 @@ public abstract class BaseEvent
         {
             return "O evento é hoje";
         }
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getStartDateFormated()
+    {
+        return simpleStartDate;
+    }
+
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    public String getEndDateFormated()
+    {
+        return simpleEndDate;
     }
 }

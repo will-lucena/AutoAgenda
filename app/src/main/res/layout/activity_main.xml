@@ -6,11 +6,11 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:id="@+id/parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <fragment
         android:layout_marginTop="?attr/actionBarSize"
-        android:name="com.example.will.projetofinal.EventListFragment"
+        android:name="com.example.will.projetofinal.fragments.EventListFragment"
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -31,13 +31,13 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-        <com.example.will.projetofinal.CustomCalendar
+        <com.example.will.projetofinal.utils.CustomCalendar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"
             android:id="@+id/calendarView">
 
-        </com.example.will.projetofinal.CustomCalendar>
+        </com.example.will.projetofinal.utils.CustomCalendar>
 
     </FrameLayout>
 </FrameLayout>

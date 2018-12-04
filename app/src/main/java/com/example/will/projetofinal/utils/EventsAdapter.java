@@ -1,4 +1,4 @@
-package com.example.will.projetofinal;
+package com.example.will.projetofinal.utils;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.will.projetofinal.R;
+import com.example.will.projetofinal.models.BaseEvent;
 
 import java.util.List;
 
@@ -55,7 +58,7 @@ public class EventsAdapter extends ArrayAdapter<BaseEvent> {
         }
 
         BaseEvent item = list.get(position);
-        viewHolder.nameLabel.setText(item.name);
+        viewHolder.nameLabel.setText(item.getName());
         viewHolder.timeLabel.setText(item.timeUntil());
         viewHolder.eventTypeLabel.setText(item.getEventType().toString());
 

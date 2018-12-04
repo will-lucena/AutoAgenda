@@ -24,4 +24,11 @@
 
     </com.example.will.projetofinal.CustomCalendar>
 
+    <AdapterViewFlipper
+        android:visibility="invisible"
+        android:id="@+id/eventsListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </AdapterViewFlipper>
+
 </LinearLayout>

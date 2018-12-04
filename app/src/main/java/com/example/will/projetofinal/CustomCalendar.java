@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 
 public class CustomCalendar extends LinearLayout {
     
@@ -173,7 +174,16 @@ public class CustomCalendar extends LinearLayout {
      */
     public void updateCalendar()
     {
-        updateCalendar(MainActivity.dates);
+
+        if (MainActivity.eventsIsEmpty())
+        {
+            updateCalendar(new HashSet<Date>());
+        }
+        else
+        {
+            updateCalendar((HashSet<Date>) MainActivity.getKeys());
+        }
+
     }
 
     /**
@@ -256,24 +266,29 @@ public class CustomCalendar extends LinearLayout {
                             eventDate.getMonth() == month &&
                             eventDate.getYear() == year)
                     {
-                        
-                        final BaseEvent event = MainActivity.customEvents.get(eventDate);
-                        switch (event.getEventType())
+
+                        if (MainActivity.containsKey(eventDate))
                         {
-                            case Event:
-                                view.findViewById(R.id.eventIcon).setVisibility(VISIBLE);
-                                break;
-                            case Exam:
-                                view.findViewById(R.id.examIcon).setVisibility(VISIBLE);
-                                break;
+                            for (BaseEvent event: MainActivity.getEvents(eventDate)) {
+                                switch (event.getEventType())
+                                {
+                                    case Event:
+                                        view.findViewById(R.id.eventIcon).setVisibility(VISIBLE);
+                                        break;
+                                    case Exam:
+                                        view.findViewById(R.id.examIcon).setVisibility(VISIBLE);
+                                        break;
+                                }
+                            }
                         }
-                        
+
                         // mark this day for event
                         //view.setBackgroundResource(R.drawable.reminder);
                         view.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Toast.makeText(view.getContext(), event.toString(), Toast.LENGTH_SHORT).show();
+                                //TODO implementar abrir uma lista com os eventos daquele dia
+                                Toast.makeText(view.getContext(), "worked", Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;

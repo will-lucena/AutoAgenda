@@ -28,15 +28,11 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
-        fragment = (LoadingFragment) getSupportFragmentManager().findFragmentById(R.id.loadingMessages);
-
         extras = new Bundle();
         extras.putBoolean(BundleKeys.is_logged_in.toString(), isLoggedIn);
         if (isLoggedIn)
         {
-            Log.i("debug", "ok");
-            intent = new Intent(this, MainActivity.class);
-            FacebookRequests.getInstance().getUserEvents(this);
+            fragment = (LoadingFragment) getSupportFragmentManager().findFragmentById(R.id.loadingMessages);
         }
         else
         {

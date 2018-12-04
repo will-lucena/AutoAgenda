@@ -36,8 +36,9 @@ public class EventCreationActivity extends AppCompatActivity {
 
     public void createEvent(View view) {
         Log.i("events", Calendar.getInstance().getTime().toString());
-        Event event = new Event(eventName.getText().toString(), Calendar.getInstance().getTime());
-        MainActivity.events.add(event);
+        Date date = Calendar.getInstance().getTime();
+        Event event = new Event(eventName.getText().toString(), date);
+        MainActivity.addEvent(date, event);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

@@ -2,6 +2,9 @@
 
  import android.content.Intent;
  import android.os.Bundle;
+ import android.support.v4.app.Fragment;
+ import android.support.v4.app.FragmentManager;
+ import android.support.v4.app.FragmentTransaction;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.PopupMenu;
  import android.util.Log;
@@ -23,40 +26,30 @@
  import java.util.HashSet;
  import java.util.Hashtable;
  import java.util.List;
+ import java.util.Set;
 
 
- public class MainActivity extends AppCompatActivity
+ public class MainActivity extends AppCompatActivity implements IFragmentComunication
  {
      private Toolbar toolbar;
+     private Fragment fragment;
      public static CustomCalendar calendarView;
 
-     public static List<BaseEvent> events;
-     public static Hashtable<Date, BaseEvent> customEvents;
-     public static HashSet<Date> dates;
+     private static Hashtable<Date, List<BaseEvent>> events;
 
      @Override
      protected void onCreate(Bundle savedInstanceState)
      {
          super.onCreate(savedInstanceState);
-         setContentView(R.layout.activity_main);
-
-         calendarView = findViewById(R.id.calendarView);
-         dates = new HashSet<>();
-         customEvents = new Hashtable<>();
 
          if (events == null)
          {
-             events = new ArrayList<>();
+             events = new Hashtable<>();
          }
-         if ((boolean)getIntent().getExtras().get(BundleKeys.is_logged_in.toString()))
-         {
-             Log.i("debug", "logado");
-             loadEvents((String)getIntent().getExtras().get(BundleKeys.facebook_events_json.toString()));
-         }
-         else
-         {
-             Log.i("debug", "deslogado");
-         }
+
+         setContentView(R.layout.activity_main);
+
+         calendarView = findViewById(R.id.calendarView);
 
          toolbar = findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
@@ -79,8 +72,11 @@
                                          startActivity(intent);
                                          return true;
                                      case R.id.menu_listEvents:
-                                         Intent intent1 = new Intent(getApplicationContext(), EventsListActivity.class);
-                                         startActivity(intent1);
+                                         FragmentManager fragmentManager = getSupportFragmentManager();
+                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                         fragment = new EventListFragment();
+                                         fragmentTransaction.add(R.id.eventsListFragment, fragment);
+                                         fragmentTransaction.commit();
                                          return true;
                                      case R.id.menu_addEvent:
                                          Intent intent2 = new Intent(getApplicationContext(), EventCreationActivity.class);
@@ -96,30 +92,100 @@
                      }
                  }
          );
+
+         if ((boolean)getIntent().getExtras().get(BundleKeys.is_logged_in.toString()))
+         {
+             loadEvents((String)getIntent().getExtras().get(BundleKeys.facebook_events_json.toString()));
+         }
      }
 
      public static void loadEvents(String response)
      {
          Log.i("debug", "carregando eventos");
-         try {
-             JSONObject json = new JSONObject(response);
-             JSONArray results = json.getJSONArray("data");
 
-             for(int i = 0; i < results.length(); i++)
-             {
-                 String eventName = results.getJSONObject(i).getString("name");
-                 String startDate = results.getJSONObject(i).getString("start_time");
-                 String endDate = results.getJSONObject(i).getString("end_time");
-                 String[] date = startDate.split("T")[0].split("-");
-                 Event event = new Event(eventName, startDate, endDate);
-                 Date d = BaseEvent.toDate(date[0], date[1], date[2]);
-                 dates.add(d);
-                 events.add(event);
-                 customEvents.put(d, event);
+         if(response != null)
+         {
+             try {
+                 JSONObject json = new JSONObject(response);
+                 JSONArray results = json.getJSONArray("data");
+
+                 for(int i = 0; i < results.length(); i++)
+                 {
+                     String eventName = results.getJSONObject(i).getString("name");
+                     String startDate = results.getJSONObject(i).getString("start_time");
+                     String endDate = results.getJSONObject(i).getString("end_time");
+                     String[] date = startDate.split("T")[0].split("-");
+                     Event event = new Event(eventName, startDate, endDate);
+                     Date eventDate = BaseEvent.toDate(date[0], date[1], date[2]);
+
+                     List<BaseEvent> list = new ArrayList<>();
+                     if (events.containsKey(eventDate))
+                     {
+                         list = events.get(eventDate);
+                     }
+                     list.add(event);
+                     events.put(eventDate, list);
+                 }
+
+                 HashSet<Date> keys = new HashSet<>();
+                 for (Date key: events.keySet()) {
+                     keys.add(key);
+                 }
+
+                 calendarView.updateCalendar(keys);
+             } catch (JSONException e) {
+                 e.printStackTrace();
              }
-             calendarView.updateCalendar(dates);
-         } catch (JSONException e) {
-             e.printStackTrace();
          }
+     }
+
+     @Override
+     public List<BaseEvent> getEvents() {
+         List<BaseEvent> allEvents = new ArrayList<>();
+
+         for (List<BaseEvent> list : events.values()) {
+             allEvents.addAll(list);
+         }
+         return allEvents;
+     }
+
+     @Override
+     public void setEvents(List<BaseEvent> list) {
+        //TODO
+     }
+
+     @Override
+     public void changeFragment() {
+
+     }
+
+     public static void addEvent(Date key, BaseEvent event)
+     {
+         List<BaseEvent> list = new ArrayList<>();
+         if (events.containsKey(key))
+         {
+             list = events.get(key);
+         }
+         list.add(event);
+     }
+
+     public static boolean eventsIsEmpty()
+     {
+         return events.isEmpty();
+     }
+
+     public static Set<Date> getKeys()
+     {
+         return events.keySet();
+     }
+
+     public static boolean containsKey(Date key)
+     {
+         return events.containsKey(key);
+     }
+
+     public static List<BaseEvent> getEvents(Date key)
+     {
+         return events.get(key);
      }
  }

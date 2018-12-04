@@ -42,7 +42,7 @@
         </activity>
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".EventsListActivity" />
-        <activity android:name=".activities.EventCreationActivity" />
+        <activity android:name=".fragments.EventCreationFragment" />
         <activity android:name=".activities.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

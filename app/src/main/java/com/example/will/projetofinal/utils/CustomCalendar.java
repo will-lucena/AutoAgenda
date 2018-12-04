@@ -46,7 +46,7 @@ public class CustomCalendar extends LinearLayout {
     private Calendar currentDate = Calendar.getInstance();
 
     //event handling
-    private IDayClickHandler eventHandler = null;
+    private ICallendarHandler listener;
 
     // internal components
     private LinearLayout header;
@@ -154,13 +154,13 @@ public class CustomCalendar extends LinearLayout {
      */
     public void updateCalendar()
     {
-        if (MainActivity.eventsIsEmpty())
+        if (listener == null || listener.isEmptyList())
         {
             updateCalendar(new HashSet<Date>());
         }
         else
         {
-            updateCalendar(MainActivity.getKeys());
+            updateCalendar(listener.getKeys());
         }
     }
 
@@ -245,9 +245,9 @@ public class CustomCalendar extends LinearLayout {
                             eventDate.getYear() == year)
                     {
 
-                        if (MainActivity.containsKey(eventDate))
+                        if (listener.containsKey(eventDate))
                         {
-                            for (BaseEvent event: MainActivity.getEvents(eventDate)) {
+                            for (BaseEvent event: listener.getEvents(eventDate)) {
                                 switch (event.getEventType())
                                 {
                                     case Event:
@@ -266,7 +266,7 @@ public class CustomCalendar extends LinearLayout {
                             @Override
                             public void onClick(View view) {
                                 //TODO implementar abrir uma lista com os eventos daquele dia
-                                eventHandler.onDayClick(eventDate);
+                                listener.onDayClick(eventDate);
                                 Toast.makeText(view.getContext(), "worked", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -303,17 +303,8 @@ public class CustomCalendar extends LinearLayout {
     /**
      * Assign event handler to be passed needed events
      */
-    public void setEventHandler(IDayClickHandler eventHandler)
+    public void setEventHandler(ICallendarHandler eventHandler)
     {
-        this.eventHandler = eventHandler;
-    }
-
-    /**
-     * This interface defines what events to be reported to
-     * the outside world
-     */
-    public interface IDayClickHandler
-    {
-        void onDayClick(Date date);
+        this.listener = eventHandler;
     }
 }

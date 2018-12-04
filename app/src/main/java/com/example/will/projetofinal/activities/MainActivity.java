@@ -13,23 +13,18 @@
  import android.view.View;
  import android.widget.FrameLayout;
 
- import com.example.will.projetofinal.models.Place;
+ import com.example.will.projetofinal.fragments.EventCreationFragment;
  import com.example.will.projetofinal.utils.BundleKeys;
  import com.example.will.projetofinal.utils.CustomCalendar;
  import com.example.will.projetofinal.fragments.EventDetailsFragment;
  import com.example.will.projetofinal.fragments.EventListFragment;
  import com.example.will.projetofinal.utils.EventType;
  import com.example.will.projetofinal.utils.Helper;
+ import com.example.will.projetofinal.utils.ICallendarHandler;
  import com.example.will.projetofinal.utils.IFragmentComunication;
  import com.example.will.projetofinal.R;
  import com.example.will.projetofinal.models.BaseEvent;
  import com.example.will.projetofinal.models.Event;
- import com.google.android.gms.maps.CameraUpdateFactory;
- import com.google.android.gms.maps.GoogleMap;
- import com.google.android.gms.maps.OnMapReadyCallback;
- import com.google.android.gms.maps.SupportMapFragment;
- import com.google.android.gms.maps.model.LatLng;
- import com.google.android.gms.maps.model.MarkerOptions;
 
  import org.json.JSONArray;
  import org.json.JSONException;
@@ -42,16 +37,16 @@
  import java.util.List;
 
 
- public class MainActivity extends AppCompatActivity implements IFragmentComunication, CustomCalendar.IDayClickHandler
+ public class MainActivity extends AppCompatActivity implements IFragmentComunication, ICallendarHandler
  {
      private Toolbar toolbar;
      private Fragment fragment;
      private BaseEvent selectedEvent;
      private FrameLayout frameLayout;
-     private static Hashtable<Date, List<BaseEvent>> events;
+     private Hashtable<Date, List<BaseEvent>> events;
      private List<BaseEvent> listToFragment;
 
-     public static CustomCalendar calendarView;
+     public CustomCalendar calendarView;
 
      @Override
      protected void onCreate(Bundle savedInstanceState)
@@ -82,6 +77,9 @@
                          popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                              @Override
                              public boolean onMenuItemClick(MenuItem item) {
+                                 FragmentManager fragmentManager = getSupportFragmentManager();
+                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                                  switch (item.getItemId())
                                  {
                                      case R.id.menu_addAccount:
@@ -91,8 +89,6 @@
                                          return true;
                                      case R.id.menu_listEvents:
                                          //*
-                                         FragmentManager fragmentManager = getSupportFragmentManager();
-                                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                          fragment = new EventListFragment();
                                          fragmentTransaction.add(R.id.fragment, fragment);
                                          fragmentTransaction.addToBackStack(null);
@@ -102,8 +98,11 @@
                                          /**/
                                          return true;
                                      case R.id.menu_addEvent:
-                                         Intent intent2 = new Intent(getApplicationContext(), EventCreationActivity.class);
-                                         startActivity(intent2);
+                                         fragment = new EventCreationFragment();
+                                         fragmentTransaction.add(R.id.fragment, fragment);
+                                         fragmentTransaction.addToBackStack(null);
+                                         frameLayout.setVisibility(View.INVISIBLE);
+                                         fragmentTransaction.commit();
                                          return true;
                                      default:
                                          return false;
@@ -122,7 +121,7 @@
          }
      }
 
-     public static void loadEvents(String response)
+     public void loadEvents(String response)
      {
          Log.i("debug", "carregando eventos");
 
@@ -178,6 +177,11 @@
      }
 
      @Override
+     public void setEvents(BaseEvent event) {
+         addEvent(event.getStartDate(), event);
+     }
+
+     @Override
      public void onBackPressed() {
          super.onBackPressed();
          if (frameLayout.getVisibility() == View.INVISIBLE)
@@ -201,7 +205,7 @@
          return selectedEvent;
      }
 
-     public static void addEvent(Date key, BaseEvent event)
+     private void addEvent(Date key, BaseEvent event)
      {
          List<BaseEvent> list = new ArrayList<>();
          if (events.containsKey(key))
@@ -211,12 +215,13 @@
          list.add(event);
      }
 
-     public static boolean eventsIsEmpty()
-     {
+     @Override
+     public boolean isEmptyList() {
          return events.isEmpty();
      }
 
-     public static HashSet<Date> getKeys()
+     @Override
+     public HashSet<Date> getKeys()
      {
          HashSet<Date> set = new HashSet<>();
 
@@ -227,12 +232,14 @@
          return set;
      }
 
-     public static boolean containsKey(Date key)
+     @Override
+     public boolean containsKey(Date key)
      {
          return events.containsKey(key);
      }
 
-     public static List<BaseEvent> getEvents(Date key)
+     @Override
+     public List<BaseEvent> getEvents(Date key)
      {
          return events.get(key);
      }

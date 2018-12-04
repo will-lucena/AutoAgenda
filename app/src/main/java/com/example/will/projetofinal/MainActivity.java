@@ -37,6 +37,7 @@
      private BaseEvent selectedEvent;
      private FrameLayout frameLayout;
      private static Hashtable<Date, List<BaseEvent>> events;
+     private List<BaseEvent> listToFragment;
 
      public static CustomCalendar calendarView;
 
@@ -49,6 +50,7 @@
          {
              events = new Hashtable<>();
          }
+         listToFragment = new ArrayList<>();
 
          setContentView(R.layout.activity_main);
 
@@ -83,6 +85,7 @@
                                          fragmentTransaction.add(R.id.fragment, fragment);
                                          fragmentTransaction.addToBackStack(null);
                                          frameLayout.setVisibility(View.INVISIBLE);
+                                         listToFragment = getAllEvents();
                                          fragmentTransaction.commit();
                                          /**/
                                          return true;
@@ -149,6 +152,11 @@
 
      @Override
      public List<BaseEvent> getEvents() {
+         return listToFragment;
+     }
+
+     private List<BaseEvent> getAllEvents()
+     {
          List<BaseEvent> allEvents = new ArrayList<>();
 
          for (List<BaseEvent> list : events.values()) {
@@ -201,9 +209,15 @@
          return events.isEmpty();
      }
 
-     public static Set<Date> getKeys()
+     public static HashSet<Date> getKeys()
      {
-         return events.keySet();
+         HashSet<Date> set = new HashSet<>();
+
+         for (Date key: events.keySet()) {
+             set.add(key);
+         }
+
+         return set;
      }
 
      public static boolean containsKey(Date key)
@@ -220,16 +234,10 @@
      public void onDayClick(Date date) {
          if (events.containsKey(date))
          {
-             ArrayList<BaseEvent> list = (ArrayList<BaseEvent>) events.get(date);
              FragmentManager fragmentManager = getSupportFragmentManager();
              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
              fragment = new EventListFragment();
-
-             Bundle args = getIntent().getExtras();
-             args.putSerializable(BundleKeys.facebook_events_list.toString(), list);
-
-             fragment.setArguments(args);
-
+             listToFragment = events.get(date);
              fragmentTransaction.add(R.id.fragment, fragment);
              fragmentTransaction.addToBackStack(null);
              frameLayout.setVisibility(View.INVISIBLE);

@@ -158,16 +158,14 @@ public class CustomCalendar extends LinearLayout {
      */
     public void updateCalendar()
     {
-
         if (MainActivity.eventsIsEmpty())
         {
             updateCalendar(new HashSet<Date>());
         }
         else
         {
-            updateCalendar((HashSet<Date>) MainActivity.getKeys());
+            updateCalendar(MainActivity.getKeys());
         }
-
     }
 
     /**

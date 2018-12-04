@@ -50,7 +50,7 @@ public class CustomCalendar extends LinearLayout {
     private Calendar currentDate = Calendar.getInstance();
 
     //event handling
-    private EventHandler eventHandler = null;
+    private IDayClickHandler eventHandler = null;
 
     // internal components
     private LinearLayout header;
@@ -149,22 +149,6 @@ public class CustomCalendar extends LinearLayout {
             {
                 currentDate.add(Calendar.MONTH, -1);
                 updateCalendar();
-            }
-        });
-
-        // long-pressing a day
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> view, View cell, int position, long id)
-            {
-                // handle long-press
-                if (eventHandler == null)
-                    return false;
-
-                eventHandler.onDayLongPress((Date)view.getItemAtPosition(position));
-                return true;
             }
         });
     }
@@ -288,6 +272,7 @@ public class CustomCalendar extends LinearLayout {
                             @Override
                             public void onClick(View view) {
                                 //TODO implementar abrir uma lista com os eventos daquele dia
+                                eventHandler.onDayClick(eventDate);
                                 Toast.makeText(view.getContext(), "worked", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -324,7 +309,7 @@ public class CustomCalendar extends LinearLayout {
     /**
      * Assign event handler to be passed needed events
      */
-    public void setEventHandler(EventHandler eventHandler)
+    public void setEventHandler(IDayClickHandler eventHandler)
     {
         this.eventHandler = eventHandler;
     }
@@ -333,8 +318,8 @@ public class CustomCalendar extends LinearLayout {
      * This interface defines what events to be reported to
      * the outside world
      */
-    public interface EventHandler
+    public interface IDayClickHandler
     {
-        void onDayLongPress(Date date);
+        void onDayClick(Date date);
     }
 }

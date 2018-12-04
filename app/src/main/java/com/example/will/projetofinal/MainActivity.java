@@ -11,6 +11,7 @@
  import android.support.v7.widget.Toolbar;
  import android.view.MenuItem;
  import android.view.View;
+ import android.widget.FrameLayout;
 
  import com.facebook.AccessToken;
  import com.facebook.GraphRequest;
@@ -29,11 +30,12 @@
  import java.util.Set;
 
 
- public class MainActivity extends AppCompatActivity implements IFragmentComunication
+ public class MainActivity extends AppCompatActivity implements IFragmentComunication, CustomCalendar.IDayClickHandler
  {
      private Toolbar toolbar;
      private Fragment fragment;
      private BaseEvent selectedEvent;
+     private FrameLayout frameLayout;
      private static Hashtable<Date, List<BaseEvent>> events;
 
      public static CustomCalendar calendarView;
@@ -51,7 +53,8 @@
          setContentView(R.layout.activity_main);
 
          calendarView = findViewById(R.id.calendarView);
-
+         calendarView.setEventHandler(this);
+         frameLayout = findViewById(R.id.mainLayout);
          toolbar = findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
 
@@ -79,6 +82,7 @@
                                          fragment = new EventListFragment();
                                          fragmentTransaction.add(R.id.fragment, fragment);
                                          fragmentTransaction.addToBackStack(null);
+                                         frameLayout.setVisibility(View.INVISIBLE);
                                          fragmentTransaction.commit();
                                          /**/
                                          return true;
@@ -159,6 +163,15 @@
      }
 
      @Override
+     public void onBackPressed() {
+         super.onBackPressed();
+         if (frameLayout.getVisibility() == View.INVISIBLE)
+         {
+             frameLayout.setVisibility(View.VISIBLE);
+         }
+     }
+
+     @Override
      public void changeFragment(BaseEvent selectedEvent) {
          this.selectedEvent = selectedEvent;
          EventDetailsFragment fragment = new EventDetailsFragment();
@@ -201,5 +214,26 @@
      public static List<BaseEvent> getEvents(Date key)
      {
          return events.get(key);
+     }
+
+     @Override
+     public void onDayClick(Date date) {
+         if (events.containsKey(date))
+         {
+             ArrayList<BaseEvent> list = (ArrayList<BaseEvent>) events.get(date);
+             FragmentManager fragmentManager = getSupportFragmentManager();
+             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+             fragment = new EventListFragment();
+
+             Bundle args = getIntent().getExtras();
+             args.putSerializable(BundleKeys.facebook_events_list.toString(), list);
+
+             fragment.setArguments(args);
+
+             fragmentTransaction.add(R.id.fragment, fragment);
+             fragmentTransaction.addToBackStack(null);
+             frameLayout.setVisibility(View.INVISIBLE);
+             fragmentTransaction.commit();
+         }
      }
  }

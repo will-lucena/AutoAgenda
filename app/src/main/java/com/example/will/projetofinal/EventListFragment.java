@@ -18,7 +18,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class EventListFragment extends ListFragment
@@ -41,7 +44,14 @@ public class EventListFragment extends ListFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        eventsAdapter = new EventsAdapter(getActivity(), R.layout.event_list_card, listener.getEvents());
+
+        ArrayList<BaseEvent> events = (ArrayList<BaseEvent>) listener.getEvents();
+        if (savedInstanceState != null)
+        {
+            events = (ArrayList<BaseEvent>) savedInstanceState.getSerializable(BundleKeys.facebook_events_list.toString());
+        }
+
+        eventsAdapter = new EventsAdapter(getActivity(), R.layout.event_list_card, events);
         setListAdapter(eventsAdapter);
         eventsAdapter.notifyDataSetChanged();
     }

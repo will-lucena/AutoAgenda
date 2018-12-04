@@ -19,14 +19,16 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
     private Intent intent;
     private Bundle extras;
     private LoadingFragment fragment;
+    private boolean isLoggedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        isLoggedIn = accessToken != null && !accessToken.isExpired();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-    
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
 
         extras = new Bundle();
         extras.putBoolean(BundleKeys.is_logged_in.toString(), isLoggedIn);
@@ -47,7 +49,12 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
         Log.i("debug", "callback received");
         launchMainActivity(result);
     }
-    
+
+    @Override
+    public boolean isLoggedin() {
+        return isLoggedIn;
+    }
+
     private void launchMainActivity(String json)
     {
         Log.i("debug", "launching activity");

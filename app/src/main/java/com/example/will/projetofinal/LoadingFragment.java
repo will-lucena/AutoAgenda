@@ -22,8 +22,11 @@ public class LoadingFragment extends Fragment implements ICallbackReceiver {
 
         label = view.findViewById(R.id.loadingLabel);
         label.setText("Requisitando API");
-        FacebookRequests.getInstance().getUserEvents(this);
 
+        if (parent.isLoggedin())
+        {
+            FacebookRequests.getInstance().getUserEvents(this);
+        }
         return view;
     }
 
@@ -42,5 +45,10 @@ public class LoadingFragment extends Fragment implements ICallbackReceiver {
     public void onEndProccess(String result) {
         label.setText("Carregando informações");
         parent.onEndProccess(result);
+    }
+
+    @Override
+    public boolean isLoggedin() {
+        return true;
     }
 }

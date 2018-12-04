@@ -33,9 +33,10 @@
  {
      private Toolbar toolbar;
      private Fragment fragment;
-     public static CustomCalendar calendarView;
-
+     private BaseEvent selectedEvent;
      private static Hashtable<Date, List<BaseEvent>> events;
+
+     public static CustomCalendar calendarView;
 
      @Override
      protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +77,8 @@
                                          FragmentManager fragmentManager = getSupportFragmentManager();
                                          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                                          fragment = new EventListFragment();
-                                         fragmentTransaction.add(R.id.eventsListFragment, fragment);
+                                         fragmentTransaction.add(R.id.fragment, fragment);
+                                         fragmentTransaction.addToBackStack(null);
                                          fragmentTransaction.commit();
                                          /**/
                                          return true;
@@ -157,8 +159,18 @@
      }
 
      @Override
-     public void changeFragment() {
+     public void changeFragment(BaseEvent selectedEvent) {
+         this.selectedEvent = selectedEvent;
+         EventDetailsFragment fragment = new EventDetailsFragment();
+         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+         fragmentTransaction.replace(R.id.fragment, fragment);
+         fragmentTransaction.addToBackStack(null);
+         fragmentTransaction.commit();
+     }
 
+     @Override
+     public BaseEvent getEvent() {
+         return selectedEvent;
      }
 
      public static void addEvent(Date key, BaseEvent event)

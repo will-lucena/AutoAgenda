@@ -47,8 +47,9 @@ public class EventListFragment extends ListFragment
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        String item = ((BaseEvent) eventsAdapter.getItem(position)).toString();
-        Toast.makeText(v.getContext(), item, Toast.LENGTH_SHORT).show();
+    public void onListItemClick(ListView l, View v, int position, long id)
+    {
+        BaseEvent selectedEvent = eventsAdapter.getItem(position);
+        listener.changeFragment(selectedEvent);
     }
 }

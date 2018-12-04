@@ -12,6 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="10dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -25,8 +26,9 @@
     </com.example.will.projetofinal.CustomCalendar>
 
     <fragment
+        android:layout_marginTop="?attr/actionBarSize"
         android:name="com.example.will.projetofinal.EventListFragment"
-        android:id="@+id/eventsListFragment"
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </fragment>

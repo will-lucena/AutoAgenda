@@ -6,5 +6,6 @@ public interface IFragmentComunication
 {
     List<BaseEvent> getEvents();
     void setEvents(List<BaseEvent> list);
-    void changeFragment();
+    void changeFragment(BaseEvent selectedEvent);
+    BaseEvent getEvent();
 }

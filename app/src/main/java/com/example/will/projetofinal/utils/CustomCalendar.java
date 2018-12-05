@@ -267,7 +267,6 @@ public class CustomCalendar extends LinearLayout {
                             public void onClick(View view) {
                                 //TODO implementar abrir uma lista com os eventos daquele dia
                                 listener.onDayClick(eventDate);
-                                Toast.makeText(view.getContext(), "worked", Toast.LENGTH_SHORT).show();
                             }
                         });
                         break;

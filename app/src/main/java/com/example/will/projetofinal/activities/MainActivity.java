@@ -25,6 +25,7 @@
  import com.example.will.projetofinal.R;
  import com.example.will.projetofinal.models.BaseEvent;
  import com.example.will.projetofinal.models.Event;
+ import com.example.will.projetofinal.utils.IFragmentReceiver;
 
  import org.json.JSONArray;
  import org.json.JSONException;
@@ -42,11 +43,9 @@
      private Toolbar toolbar;
      private Fragment fragment;
      private BaseEvent selectedEvent;
-     private FrameLayout frameLayout;
      private Hashtable<Date, List<BaseEvent>> events;
      private List<BaseEvent> listToFragment;
-
-     public CustomCalendar calendarView;
+     private IFragmentReceiver fragmentReceiver;
 
      @Override
      protected void onCreate(Bundle savedInstanceState)
@@ -61,9 +60,6 @@
 
          setContentView(R.layout.activity_main);
 
-         calendarView = findViewById(R.id.calendarView);
-         calendarView.setEventHandler(this);
-         frameLayout = findViewById(R.id.mainLayout);
          toolbar = findViewById(R.id.toolbar);
          setSupportActionBar(toolbar);
 
@@ -90,18 +86,15 @@
                                      case R.id.menu_listEvents:
                                          //*
                                          fragment = new EventListFragment();
-                                         fragmentTransaction.add(R.id.fragment, fragment);
+                                         fragmentTransaction.replace(R.id.fragment, fragment, "EventList");
                                          fragmentTransaction.addToBackStack(null);
-                                         frameLayout.setVisibility(View.INVISIBLE);
                                          listToFragment = getAllEvents();
                                          fragmentTransaction.commit();
                                          /**/
                                          return true;
                                      case R.id.menu_addEvent:
                                          fragment = new EventCreationFragment();
-                                         fragmentTransaction.add(R.id.fragment, fragment);
-                                         fragmentTransaction.addToBackStack(null);
-                                         frameLayout.setVisibility(View.INVISIBLE);
+                                         fragmentTransaction.replace(R.id.fragment, fragment, "EventCreation");
                                          fragmentTransaction.commit();
                                          return true;
                                      default:
@@ -119,6 +112,18 @@
          {
              loadEvents((String)getIntent().getExtras().get(BundleKeys.facebook_events_json.toString()));
          }
+
+         getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+             @Override
+             public void onBackStackChanged() {
+                 Log.i("debug", String.valueOf(getSupportFragmentManager().getBackStackEntryCount()));
+                 /*
+                 for (Fragment frag: getSupportFragmentManager().getFragments()) {
+                     Log.i("debug", frag.getTag() + " " + frag.isVisible());
+                 }
+                 /**/
+             }
+         });
      }
 
      public void loadEvents(String response)
@@ -149,7 +154,7 @@
                      keys.add(key);
                  }
 
-                 calendarView.updateCalendar(keys);
+                 fragmentReceiver.updateCalendar(keys);
              } catch (JSONException e) {
                  e.printStackTrace();
              }
@@ -182,20 +187,11 @@
      }
 
      @Override
-     public void onBackPressed() {
-         super.onBackPressed();
-         if (frameLayout.getVisibility() == View.INVISIBLE)
-         {
-             frameLayout.setVisibility(View.VISIBLE);
-         }
-     }
-
-     @Override
      public void changeFragment(BaseEvent selectedEvent) {
          this.selectedEvent = selectedEvent;
          EventDetailsFragment fragment = new EventDetailsFragment();
          FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-         fragmentTransaction.replace(R.id.fragment, fragment);
+         fragmentTransaction.replace(R.id.fragment, fragment, "EventDetails");
          fragmentTransaction.addToBackStack(null);
          fragmentTransaction.commit();
      }
@@ -252,10 +248,14 @@
              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
              fragment = new EventListFragment();
              listToFragment = events.get(date);
-             fragmentTransaction.add(R.id.fragment, fragment);
+             fragmentTransaction.add(R.id.fragment, fragment, "EventList");
              fragmentTransaction.addToBackStack(null);
-             frameLayout.setVisibility(View.INVISIBLE);
              fragmentTransaction.commit();
          }
+     }
+
+     @Override
+     public void setFragment(IFragmentReceiver receiver) {
+         this.fragmentReceiver = receiver;
      }
  }

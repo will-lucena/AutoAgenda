@@ -11,7 +11,6 @@
  import android.view.MenuItem;
  import android.view.View;
 
- import com.example.will.projetofinal.fragments.EventCreationFragment;
  import com.example.will.projetofinal.utils.BundleKeys;
  import com.example.will.projetofinal.fragments.EventDetailsFragment;
  import com.example.will.projetofinal.fragments.EventListFragment;
@@ -109,14 +108,6 @@
                                          fragmentTransaction.commit();
                                          /**/
                                          return true;
-                                     case R.id.menu_addEvent:
-                                         FragmentManager fragmentManager1 = getSupportFragmentManager();
-                                         FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
-                                         fragment = new EventCreationFragment();
-                                         findViewById(R.id.mainFragment).setVisibility(View.INVISIBLE);
-                                         fragmentTransaction1.replace(R.id.auxFragment, fragment, "EventCreation");
-                                         fragmentTransaction1.commit();
-                                         return true;
                                      default:
                                          return false;
                                  }
@@ -176,11 +167,6 @@
      }
 
      @Override
-     public void setEvent(BaseEvent event) {
-         addEvent(event.getStartDate(), event);
-     }
-
-     @Override
      public void changeFragment(BaseEvent selectedEvent)
      {
          this.selectedEvent = selectedEvent;
@@ -195,16 +181,6 @@
      @Override
      public BaseEvent getEvent() {
          return selectedEvent;
-     }
-
-     private void addEvent(Date key, BaseEvent event)
-     {
-         List<BaseEvent> list = new ArrayList<>();
-         if (events.containsKey(key))
-         {
-             list = events.get(key);
-         }
-         list.add(event);
      }
 
      @Override

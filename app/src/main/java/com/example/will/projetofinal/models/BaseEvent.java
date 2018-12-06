@@ -103,10 +103,11 @@ public abstract class BaseEvent
         System.out.println("different : " + difference);
 
         long secondsInMilli = 1000;
-        long daysInMilli = secondsInMilli * 24 * 60 * 60;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
 
         long elapsedDays = difference / daysInMilli;
-        difference = difference % daysInMilli;
 
         if (difference < 0)
         {
@@ -114,7 +115,7 @@ public abstract class BaseEvent
         }
         else if (difference > 0)
         {
-            return "Faltam " + elapsedDays + " para o evento começar";
+            return "Falta(m) " + (elapsedDays + 1) + " dia(s) para o evento começar";
         }
         else
         {

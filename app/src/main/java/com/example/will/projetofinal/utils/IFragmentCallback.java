@@ -3,7 +3,7 @@ package com.example.will.projetofinal.utils;
 import java.util.Date;
 import java.util.HashSet;
 
-public interface IFragmentReceiver
+public interface IFragmentCallback
 {
     void updateCalendar(HashSet<Date> set);
 }

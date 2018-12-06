@@ -50,7 +50,6 @@ public class EventsAdapter extends ArrayAdapter<BaseEvent> {
             viewHolder.nameLabel = rowView.findViewById(R.id.eventName);
             viewHolder.timeLabel = rowView.findViewById(R.id.timeUntil);
             viewHolder.eventTypeLabel = rowView.findViewById(R.id.eventType);
-            viewHolder.eventImage = rowView.findViewById(R.id.eventImage);
 
             rowView.setTag(viewHolder);
         } else {

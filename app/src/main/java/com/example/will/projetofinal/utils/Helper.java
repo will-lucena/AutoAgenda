@@ -9,10 +9,8 @@ import com.example.will.projetofinal.models.Place;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Date;
-
-public class Helper {
-
+public class Helper
+{
     public static BaseEvent buildEvent(JSONObject json, EventType type) throws JSONException {
         switch (type)
         {
@@ -45,8 +43,6 @@ public class Helper {
 
         String[] date = startDate.split("T")[0].split("-");
         Event event = new Event(eventName, startDate, endDate, location);
-        Date eventDate = BaseEvent.toDate(date[0], date[1], date[2]);
-
         return event;
     }
 }

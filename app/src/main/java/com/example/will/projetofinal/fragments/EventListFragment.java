@@ -11,26 +11,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.will.projetofinal.utils.EventsAdapter;
-import com.example.will.projetofinal.utils.IFragmentComunication;
+import com.example.will.projetofinal.utils.IFragmentManager;
 import com.example.will.projetofinal.R;
 import com.example.will.projetofinal.models.BaseEvent;
 
 
 public class EventListFragment extends ListFragment
 {
-    private IFragmentComunication listener;
+    private IFragmentManager listener;
     private ArrayAdapter<BaseEvent> eventsAdapter;
 
     @Override
     public void onAttach(Context context)
     {
         super.onAttach(context);
-        if(!(context instanceof IFragmentComunication))
+        if(!(context instanceof IFragmentManager))
         {
-            throw new RuntimeException("Deve ser um IFragmentComunication");
+            throw new RuntimeException("Deve ser um IFragmentManager");
         }
 
-        listener = (IFragmentComunication) context;
+        listener = (IFragmentManager) context;
     }
 
     @Override

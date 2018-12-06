@@ -13,5 +13,5 @@ public interface ICallendarHandler
     boolean containsKey(Date key);
     List<BaseEvent> getEvents(Date key);
     void onDayClick(Date date);
-    void setFragment(IFragmentReceiver receiver);
+    void setFragment(IFragmentCallback receiver);
 }

@@ -3,7 +3,6 @@ package com.example.will.projetofinal.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.will.projetofinal.utils.BundleKeys;
 import com.example.will.projetofinal.utils.FacebookRequests;
@@ -44,7 +43,6 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
     
     @Override
     public void onEndProccess(String result) {
-        Log.i("debug", "callback received");
         launchMainActivity(result);
     }
 
@@ -55,12 +53,10 @@ public class SplashScreenActivity extends AppCompatActivity implements ICallback
 
     private void launchMainActivity(String json)
     {
-        Log.i("debug", "launching activity");
         intent = new Intent(this, MainActivity.class);
         extras.putString(BundleKeys.facebook_events_json.toString(), json);
         extras.putBoolean(BundleKeys.is_logged_in.toString(), true);
         intent.putExtras(extras);
-        Log.i("debug", "go");
         startActivity(intent);
     }
     

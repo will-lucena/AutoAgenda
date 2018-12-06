@@ -13,10 +13,8 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.will.projetofinal.R;
-import com.example.will.projetofinal.activities.MainActivity;
 import com.example.will.projetofinal.models.BaseEvent;
 
 import java.text.SimpleDateFormat;
@@ -30,9 +28,6 @@ public class CustomCalendar extends LinearLayout {
     private int currentExibitionMonth;
     private int currentExibitionYear;
     
-    // for logging
-    private static final String LOGTAG = "Calendar View";
-
     // how many days to show, defaults to six weeks, 42 days
     private static final int DAYS_COUNT = 42;
 
@@ -46,7 +41,7 @@ public class CustomCalendar extends LinearLayout {
     private Calendar currentDate = Calendar.getInstance();
 
     //event handling
-    private ICallendarHandler listener;
+    private ICallendarHandler handler;
 
     // internal components
     private LinearLayout header;
@@ -117,11 +112,11 @@ public class CustomCalendar extends LinearLayout {
     private void assignUiElements()
     {
         // layout is inflated, assign local variables to components
-        header = (LinearLayout)findViewById(R.id.calendar_header);
-        btnPrev = (ImageView)findViewById(R.id.calendar_prev_button);
-        btnNext = (ImageView)findViewById(R.id.calendar_next_button);
-        txtDate = (TextView)findViewById(R.id.calendar_date_display);
-        grid = (GridView)findViewById(R.id.calendar_grid);
+        header = findViewById(R.id.calendar_header);
+        btnPrev = findViewById(R.id.calendar_prev_button);
+        btnNext = findViewById(R.id.calendar_next_button);
+        txtDate = findViewById(R.id.calendar_date_display);
+        grid = findViewById(R.id.calendar_grid);
     }
 
     private void assignClickHandlers()
@@ -154,13 +149,13 @@ public class CustomCalendar extends LinearLayout {
      */
     public void updateCalendar()
     {
-        if (listener == null || listener.isEmptyList())
+        if (handler == null || handler.isEmptyList())
         {
             updateCalendar(new HashSet<Date>());
         }
         else
         {
-            updateCalendar(listener.getKeys());
+            updateCalendar(handler.getKeys());
         }
     }
 
@@ -245,9 +240,9 @@ public class CustomCalendar extends LinearLayout {
                             eventDate.getYear() == year)
                     {
 
-                        if (listener.containsKey(eventDate))
+                        if (handler.containsKey(eventDate))
                         {
-                            for (BaseEvent event: listener.getEvents(eventDate)) {
+                            for (BaseEvent event: handler.getEvents(eventDate)) {
                                 switch (event.getEventType())
                                 {
                                     case Event:
@@ -266,7 +261,7 @@ public class CustomCalendar extends LinearLayout {
                             @Override
                             public void onClick(View view) {
                                 //TODO implementar abrir uma lista com os eventos daquele dia
-                                listener.onDayClick(eventDate);
+                                handler.onDayClick(eventDate);
                             }
                         });
                         break;
@@ -302,8 +297,8 @@ public class CustomCalendar extends LinearLayout {
     /**
      * Assign event handler to be passed needed events
      */
-    public void setEventHandler(ICallendarHandler eventHandler)
+    public void setHandler(ICallendarHandler callendarHandler)
     {
-        this.listener = eventHandler;
+        this.handler = callendarHandler;
     }
 }

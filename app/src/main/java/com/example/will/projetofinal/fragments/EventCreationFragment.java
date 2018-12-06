@@ -14,13 +14,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.will.projetofinal.R;
 import com.example.will.projetofinal.models.BaseEvent;
 import com.example.will.projetofinal.models.Event;
 import com.example.will.projetofinal.utils.EventType;
-import com.example.will.projetofinal.utils.IFragmentComunication;
+import com.example.will.projetofinal.utils.IFragmentManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +28,7 @@ public class EventCreationFragment extends Fragment implements AdapterView.OnIte
 
     private EditText eventName;
     private DatePicker datePicker;
-    private IFragmentComunication listener;
+    private IFragmentManager listener;
     private Spinner eventTypeSpinner;
     private EventType selectedType;
     private ArrayAdapter<CharSequence> adapter;
@@ -38,12 +37,12 @@ public class EventCreationFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if(!(context instanceof IFragmentComunication))
+        if(!(context instanceof IFragmentManager))
         {
             throw new RuntimeException("Deve ser um IFragmentComunication");
         }
 
-        listener = (IFragmentComunication) context;
+        listener = (IFragmentManager) context;
     }
 
     @Nullable
@@ -77,7 +76,7 @@ public class EventCreationFragment extends Fragment implements AdapterView.OnIte
                 BaseEvent event = new Event(eventName.getText().toString(), date);
                 event.setEventType(selectedType);
 
-                listener.setEvents(event);
+                listener.setEvent(event);
             }
         });
 

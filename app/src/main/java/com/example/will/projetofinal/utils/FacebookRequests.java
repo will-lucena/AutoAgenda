@@ -29,7 +29,6 @@ public class FacebookRequests
     
     public void getUserEvents(final ICallbackReceiver callback)
     {
-        Log.i("debug", "requesting events");
         new GraphRequest(
                 token,
                 "/" + token.getUserId() + "/events",
@@ -37,7 +36,6 @@ public class FacebookRequests
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
-                        Log.i("debug", "request success");
                         callback.onEndProccess(response.getRawResponse());
                     }
                 }

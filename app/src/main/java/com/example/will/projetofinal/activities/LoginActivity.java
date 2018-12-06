@@ -3,7 +3,6 @@ package com.example.will.projetofinal.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +16,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.squareup.picasso.Picasso;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity
+{
     private CallbackManager callbackManager;
     private LoginButton loginButton;
     
@@ -26,7 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextView usernameLabel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -41,13 +41,15 @@ public class LoginActivity extends AppCompatActivity {
             usernameLabel.setText(Profile.getCurrentProfile().getName());
             Picasso.with(this).load(Profile.getCurrentProfile().getProfilePictureUri(300, 200)).into(picture);
         }
-        
+        setupLoginButton();
+    }
+
+    private void setupLoginButton()
+    {
         loginButton.setReadPermissions("public_profile", "user_events");
-        // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
                 Bundle extras = getIntent().getExtras();
                 extras.putBoolean(BundleKeys.is_logged_in.toString(), true);
                 getIntent().putExtras(extras);
@@ -57,14 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                // App code
-                Log.i("debug", "arregou");
             }
 
             @Override
             public void onError(FacebookException exception) {
-                // App code
-                Log.i("debug", "deu ruim");
             }
         });
     }

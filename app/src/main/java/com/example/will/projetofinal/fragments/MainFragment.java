@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 import com.example.will.projetofinal.R;
 import com.example.will.projetofinal.utils.CustomCalendar;
 import com.example.will.projetofinal.utils.ICallendarHandler;
-import com.example.will.projetofinal.utils.IFragmentReceiver;
+import com.example.will.projetofinal.utils.IFragmentCallback;
 
 import java.util.Date;
 import java.util.HashSet;
 
-public class MainFragment extends Fragment implements IFragmentReceiver
+public class MainFragment extends Fragment implements IFragmentCallback
 {
     private CustomCalendar calendarView;
     private ICallendarHandler listener;
@@ -40,7 +40,7 @@ public class MainFragment extends Fragment implements IFragmentReceiver
         View view = inflater.inflate(R.layout.fragment_main, container,false);
 
         calendarView = view.findViewById(R.id.calendarView);
-        calendarView.setEventHandler(listener);
+        calendarView.setHandler(listener);
 
         return view;
     }
